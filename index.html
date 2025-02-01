@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/style.css" />
+    <title>juego el ahorcado</title>
+  </head>
+  <body>
+    <article class="ahorcado">
+      <h1 class="ahorcado__title">Ahorcado pixel</h1>
+      <section class="ahorcado__container">
+        <canvas class="ahorcado__ilustration" height="0"></canvas>
+        <p class="ahorcado__wrong-letters"></p>
+      </section>
+      <div class="ahorcado__match-letters"></div>
+
+      <button class="ahorcado__btn-start">Start</button>
+    </article>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
