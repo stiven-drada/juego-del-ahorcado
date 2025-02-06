@@ -4,7 +4,7 @@ const wrongLetters = document.querySelector(".ahorcado__wrong-letters");
 const containerMatch = document.querySelector(".ahorcado__match-letters");
 import arrayWords from "./palabras";
 
-// tarea buscar en youtube estp literal "antes de escribir codigo"
+
 let word;
 let winer = [];
 
