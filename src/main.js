@@ -2,10 +2,11 @@ const btnStart = document.querySelector(".ahorcado__btn-start");
 const canvas = document.querySelector(".ahorcado__ilustration");
 const wrongLetters = document.querySelector(".ahorcado__wrong-letters");
 const containerMatch = document.querySelector(".ahorcado__match-letters");
-import words from "./palabras";
+import arrayWords from "./palabras";
 // lista de herramientas para aprender a utilizar
 // canvas,expreciones regulares,el objeto math
 let word;
+let winer = [];
 
 const ctx = canvas.getContext("2d");
 
@@ -17,9 +18,10 @@ const bodyParts = [
   [3, 3, 1, 1],
   [5, 3, 1, 1],
 ];
-function wordRandom(arrayWords) {
+function randomWord(arrayWords) {
   let indexRandom = Math.floor(Math.random() * arrayWords.length);
-  return arrayWords[indexRandom];
+  let word = arrayWords[indexRandom];
+  return word;
 }
 
 function containerwords(word) {
@@ -32,13 +34,14 @@ function containerwords(word) {
     span.innerText = " ";
     containerMatch.appendChild(span);
   });
-  return { letters, word };
+  return word;
 }
 // escucho el evento del teclado este dever ser una letra no numeros
 // revisar cuantas veces esta la letra en la palabra y si el contenedor de la palabras ya lo tine omitimos
 // y verificar en que posisines esta la letra
 
 function startGame() {
+  wrongLetters.innerHTML = "";
   ctx.canvas.width = 120;
   ctx.canvas.height = 160;
   ctx.fillStyle = "#d95d39";
@@ -48,26 +51,46 @@ function startGame() {
   ctx.fillRect(1, 0, 4, 1);
   ctx.fillRect(4, 1, 1, 1);
 
-  word = containerwords(wordRandom(words));
+  word = randomWord(arrayWords);
+  containerwords(word);
+  console.log(word);
+  winer = [];
+
+  document.addEventListener("keyup", (e) => {
+    winOrLose(e.key, word);
+  });
 }
 
 btnStart.addEventListener("click", startGame);
 
-document.addEventListener("keyup", (e) => console.log(typeof e.key));
-
-//  exiten 2 formas de crear expreciones regulares (regex): notacion literal o el constructor RegExp
-// 1 notacion lietaral involucra encerrar el patron en barras. ejemplo : /patron/
-// 2 usando la funcion de constructor RegExp
-
-let str = "Hello world! This is a test string.";
-let regex = /o/g;
-
-let matches = str.matchAll(regex);
-
-for (let match of matches) {
-  console.log(match);
-}
-
-// argumento de patron
-//  / ^\d/
 // https://www.freecodecamp.org/espanol/news/expresiones-regulares-regex-en-javascript-manual-para-principiantes/
+
+function winOrLose(key, word) {
+  if (key.length === 1 && /[a-z]/gi.test(key)) {
+    let regex = new RegExp(`${key}`, "i");
+    let re = new RegExp(`${key}`, "ig");
+
+    if (regex.test(word)) {
+      for (let i = 0; i <= word.length; i++) {
+        if (word[i] === key) {
+          containerMatch.children[i].innerHTML = word[i];
+          console.log(i, word[i]);
+
+          winer[i] = word[i];
+        }
+      }
+    } else {
+      wrongLetters.innerHTML += key; // las letras que no coincidan las agrega al parrafo de letras incorrectas
+      ctx.fillStyle = "white";
+      ctx.fillRect(...bodyParts[wrongLetters.innerText.length - 1]); // apllica una parte del ahorcado
+      if (wrongLetters.innerText.length >= 6) {
+        window.alert("perdiste");
+      } // verifica si  a  escrito 6
+    }
+
+    if (winer.join("") === word) {
+      console.log("win");
+      startGame();
+    }
+  }
+}

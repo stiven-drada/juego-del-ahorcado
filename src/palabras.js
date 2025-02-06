@@ -17,16 +17,15 @@ const palabrasAhorcado = [
   "espejo",
   "cactus",
   "libro",
-  "ratón",
+  "raton", // Sin tilde
   "luna",
   "reina",
   "tren",
-  "estrella",
-  "zapatos",
+  "estrella", // Sin tilde
   "tigre",
-  "fútbol",
-  "avión",
-  "película",
+  "futbol", // Sin tilde
+  "avion", // Sin tilde
+  "pelicula", // Sin tilde
   "peluche",
   "banco",
   "reloj",
@@ -36,19 +35,16 @@ const palabrasAhorcado = [
   "silla",
   "plato",
   "cuchara",
-  "espejo",
-  "cajón",
+  "cajon", // Sin tilde
   "lentes",
-  "arcoiris",
+  "arcoiris", // Sin tilde
   "piedra",
-  "librería",
+  "libreria", // Sin tilde
   "juguete",
   "sombrero",
-  "estrella",
   "hotel",
   "cachorro",
   "nube",
-  "tren",
   "barco",
   "dinosaurio",
 ];
