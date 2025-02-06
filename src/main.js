@@ -3,8 +3,8 @@ const canvas = document.querySelector(".ahorcado__ilustration");
 const wrongLetters = document.querySelector(".ahorcado__wrong-letters");
 const containerMatch = document.querySelector(".ahorcado__match-letters");
 import arrayWords from "./palabras";
-// lista de herramientas para aprender a utilizar
-// canvas,expreciones regulares,el objeto math
+
+// tarea buscar en youtube estp literal "antes de escribir codigo"
 let word;
 let winer = [];
 
@@ -36,9 +36,6 @@ function containerwords(word) {
   });
   return word;
 }
-// escucho el evento del teclado este dever ser una letra no numeros
-// revisar cuantas veces esta la letra en la palabra y si el contenedor de la palabras ya lo tine omitimos
-// y verificar en que posisines esta la letra
 
 function startGame() {
   wrongLetters.innerHTML = "";
@@ -56,40 +53,37 @@ function startGame() {
   console.log(word);
   winer = [];
 
-  document.addEventListener("keyup", (e) => {
-    winOrLose(e.key, word);
-  });
+  document.addEventListener("keyup", handleKeyPrees);
+}
+
+function handleKeyPrees(e) {
+  winOrLose(e.key, word);
 }
 
 btnStart.addEventListener("click", startGame);
 
-// https://www.freecodecamp.org/espanol/news/expresiones-regulares-regex-en-javascript-manual-para-principiantes/
-
 function winOrLose(key, word) {
-  if (key.length === 1 && /[a-z]/gi.test(key)) {
-    let regex = new RegExp(`${key}`, "i");
-    let re = new RegExp(`${key}`, "ig");
-
-    if (regex.test(word)) {
+  if (key.length === 1 && /[a-z]/i.test(key)) {
+    if (word.includes(key)) {
       for (let i = 0; i <= word.length; i++) {
         if (word[i] === key) {
           containerMatch.children[i].innerHTML = word[i];
-          console.log(i, word[i]);
 
           winer[i] = word[i];
         }
       }
     } else {
-      wrongLetters.innerHTML += key; // las letras que no coincidan las agrega al parrafo de letras incorrectas
+      wrongLetters.innerHTML += key;
       ctx.fillStyle = "white";
-      ctx.fillRect(...bodyParts[wrongLetters.innerText.length - 1]); // apllica una parte del ahorcado
+      ctx.fillRect(...bodyParts[wrongLetters.innerText.length - 1]);
       if (wrongLetters.innerText.length >= 6) {
-        window.alert("perdiste");
-      } // verifica si  a  escrito 6
+        window.alert(`Mala suerte Perdiste, la pabra es ${word}`);
+        startGame();
+      }
     }
 
     if (winer.join("") === word) {
-      console.log("win");
+      window.alert("Bien Echo Ganaste");
       startGame();
     }
   }
